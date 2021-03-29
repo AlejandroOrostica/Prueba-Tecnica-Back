@@ -13,17 +13,17 @@ import java.util.List;
 @RequestMapping(value = "users")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    @GetMapping(value = "all")
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
-    }
+        @GetMapping(value = "")
+        public List<User> getAllUsers(){
+            return userRepository.findAll();
+        }
 
-    @PostMapping(value = "all")
-    public User createUser(@RequestBody User user){
-        return userRepository.save(user);
-    }
+        @PostMapping(value = "")
+        public User createUser(@RequestBody User user){
+            return userRepository.save(user);
+        }
 
 }

@@ -4,6 +4,7 @@ package com.avla.test.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -22,6 +23,9 @@ public class Product {
 
     @Column(name= "state")
     private String state;
+
+    @OneToMany(mappedBy = "product")
+    List<UserProductLog> logs;
 
 
 }
