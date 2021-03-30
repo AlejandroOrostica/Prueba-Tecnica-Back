@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.avla.test.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,6 +25,13 @@ public class UserController {
         @PostMapping(value = "")
         public User createUser(@RequestBody User user){
             return userRepository.save(user);
+        }
+
+        @PostMapping(value = "login")
+        public User createUser(@RequestBody Map<String,Object> json){
+            String email = json.get("email").toString();
+            String password = json.get("password").toString();
+            return userRepository.findUserByEmailAndPassword(email,  password);
         }
 
 }
