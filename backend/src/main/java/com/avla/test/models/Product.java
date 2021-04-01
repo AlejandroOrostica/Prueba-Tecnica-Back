@@ -24,8 +24,8 @@ public class Product {
     @Column(name= "state")
     private String state;
 
-    @OneToMany(mappedBy = "product")
-    List<UserProductLog> logs;
+    //@OneToMany(mappedBy = "product")
+    //List<UserProductLog> logs;
 
 
 }

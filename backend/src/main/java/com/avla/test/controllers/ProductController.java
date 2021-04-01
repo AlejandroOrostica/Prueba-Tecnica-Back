@@ -32,12 +32,12 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @PostMapping(value = "{userId}/add")
+    @PostMapping(value = "add/{userId}")
     public Product createProduct(@RequestBody Product product, @PathVariable(value = "userId") Long userId){
         Product createdProduct = productRepository.save(product);
         User user = userRepository.findUserById(userId);
         String log = "El usuario " + user.getName() + " ingresó el item " + product.getName();
-        UserProductLog productLog = new UserProductLog(log, user, product);
+        UserProductLog productLog = new UserProductLog(log, user);
         userProductLogRepository.save(productLog);
         return createdProduct;
     }
@@ -58,7 +58,7 @@ public class ProductController {
         product.setDescription(updatedProduct.getDescription());
         product.setState(updatedProduct.getState());
 
-        UserProductLog productLog = new UserProductLog(log, user, product);
+        UserProductLog productLog = new UserProductLog(log, user);
         userProductLogRepository.save(productLog);
 
 
@@ -66,9 +66,14 @@ public class ProductController {
         return productRepository.save(product);
     }
 
-    @DeleteMapping(value = "{productId}" )
-    public ResponseEntity<Long> deleteProduct(@PathVariable(value = "productId") Long productId){
+    @DeleteMapping(value = "/{userId}/delete/{productId}" )
+    public ResponseEntity<Long> deleteProduct(@PathVariable(value = "productId") Long productId,@PathVariable(value = "userId") Long userId){
         Product product = productRepository.findById(productId).get();
+        User user = userRepository.findUserById(userId);
+        String log = "El usuario " + user.getName() + " eliminó el item " +
+                product.getName();
+        UserProductLog productLog = new UserProductLog(log, user);
+        userProductLogRepository.save(productLog);
         productRepository.delete(product);
         return new ResponseEntity<>(productId, HttpStatus.OK );
 

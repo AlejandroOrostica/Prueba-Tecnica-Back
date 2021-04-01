@@ -30,16 +30,11 @@ public class UserProductLog {
     @JoinColumn(name= "user_id")
     User user;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name= "product_id")
-    Product product;
 
 
-    public UserProductLog(String log, User user, Product product) {
+    public UserProductLog(String log, User user) {
         this.log = log;
         this.user = user;
-        this.product = product;
     }
     public UserProductLog(){}
 }
