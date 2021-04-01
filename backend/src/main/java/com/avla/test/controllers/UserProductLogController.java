@@ -4,6 +4,7 @@ package com.avla.test.controllers;
 import com.avla.test.models.User;
 import com.avla.test.models.UserProductLog;
 import com.avla.test.repositories.UserProductLogRepository;
+import com.avla.test.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,10 @@ public class UserProductLogController {
 
     @Autowired
     private UserProductLogRepository userProductLogRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     @GetMapping(value = "")
     public List<UserProductLog> getAllLogs(){

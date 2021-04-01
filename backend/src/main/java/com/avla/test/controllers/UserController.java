@@ -2,7 +2,11 @@ package com.avla.test.controllers;
 
 
 import com.avla.test.models.User;
+import com.avla.test.models.UserProductLog;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.avla.test.repositories.UserRepository;
 
@@ -27,11 +31,24 @@ public class UserController {
             return userRepository.save(user);
         }
 
+        @GetMapping(value = "{userId}/logs")
+        public List<UserProductLog> getAllLogs(@PathVariable(value = "userId") Long userId){
+            User user = userRepository.findUserById(userId);
+            return user.getLogs();
+        }
+
         @PostMapping(value = "login")
-        public User createUser(@RequestBody Map<String,Object> json){
+        public ResponseEntity<User>  createUser(@RequestBody Map<String,Object> json){
             String email = json.get("email").toString();
             String password = json.get("password").toString();
-            return userRepository.findUserByEmailAndPassword(email,  password);
+            User user = userRepository.findUserByEmailAndPassword(email, password);
+            if (user != null){
+                return new ResponseEntity<>(user, HttpStatus.OK) ;
+            }
+            else{
+                return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST) ;
+            }
+
         }
 
 }
